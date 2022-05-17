@@ -10,9 +10,8 @@ someFunc :: IO ()
 someFunc = do 
     handle <- openFile "resources/sudoku.txt" ReadMode
     text <- hGetContents handle
-    
     let problems = extractProblemsFromString $ lines text
 
-    putStrLn $ show problems
+    mapM_ (\p -> do{print $ blockIndex p}) $ head problems
 
     hClose handle
