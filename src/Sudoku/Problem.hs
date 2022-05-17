@@ -30,6 +30,6 @@ numToSudoku::(Int ,Int) -> SudokuBox
 numToSudoku (realIndex,num)
     | and [num>=0,num<=9] = SudokuBox num realIndex rowIndex columnIndex blockIndex
     where
-        rowIndex = truncate $ fromIntegral realIndex / 9
-        columnIndex = realIndex `mod` 9
-        blockIndex = (truncate (fromIntegral rowIndex/3)) * 3 + truncate (fromIntegral columnIndex/3)
+        rowIndex = truncate $ fromIntegral realIndex / 9 -- 9マスごとの列のインデックス
+        columnIndex = realIndex `mod` 9 -- 9マスごとの行のインデックス
+        blockIndex = (truncate (fromIntegral rowIndex/3)) * 3 + truncate (fromIntegral columnIndex/3) -- 9マスごとのブロックのインデックス
