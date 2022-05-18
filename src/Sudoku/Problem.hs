@@ -4,7 +4,7 @@ module Sudoku.Problem
   , SudokuBox(..)
   , SudokuProblem
   , SudokuAnswer
-  , SudokuUnits
+  , SudokuUnit
   ) where
 
 import           Data.Char
@@ -19,8 +19,8 @@ data SudokuBox = SudokuBox
   , blockIndex  :: Int
   }
 type SudokuProblem = [SudokuBox]
-type SudokuAnswer = [Int]
-type SudokuUnits = [[Int]]
+type SudokuAnswer = [[Int]]
+type SudokuUnit = [Int]
 
 extractProblemsFromString :: [String] -> [SudokuProblem]
 extractProblemsFromString lines = map (stringToProblem) lines
@@ -49,8 +49,8 @@ numToSudoku (realIndex, num) | and [num >= 0, num <= 9] = SudokuBox
   blockIndex  = (truncate (fromIntegral rowIndex / 3)) * 3 + truncate
     (fromIntegral columnIndex / 3) -- 9マスごとのブロックのインデックス
 
-convertToUnits :: SudokuProblem -> (SudokuBox -> Int) -> SudokuUnits
-convertToUnits sp f = [ toUnit i | i <- [0 .. 9] ]
+convertToUnits :: SudokuProblem -> (SudokuBox -> Int) -> [SudokuUnit]
+convertToUnits sp f = [ toUnit i | i <- [0 .. 8] ]
  where
   tuples = map (\x -> (f x, num x)) sp
   toUnit i = [ snd x | x <- tuples, fst x == i ]
