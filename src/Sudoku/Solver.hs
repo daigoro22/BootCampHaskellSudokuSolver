@@ -5,6 +5,7 @@ module Sudoku.Solver
   ) where
 
 import           Data.Char
+import           Data.Foldable                  ( toList )
 import           Data.List.Index
 import qualified Data.Set                      as Set
 import           Sudoku.Problem
@@ -13,9 +14,19 @@ import           System.IO
 data ValidationResult = Valid | InValid | NotFilled deriving (Eq, Show,Enum)
 type Candidates = Set.Set Int
 
--- exhausiveSearch::SudokuProblem->SudokuAnswer
-exhausiveSearch :: SudokuProblem -> [SudokuUnit]
-exhausiveSearch sp = convertToUnits sp blockIndex
+exhausiveSearch :: SudokuProblem -> SudokuBox -> SudokuProblem
+exhausiveSearch sp sb
+  | or [isAllFilled sp, realIndex sb == 80] = sp
+  | -- 探索完了条件
+    num sb /= 0                             = exhausiveSearch sp nextBox
+  | -- 決定済みのマス目の場合、次のマスを探索
+    candidates == []                        = []
+  | -- 探索打ち切り条件
+    otherwise = concat [ exhausiveSearch (fillSp n) nextBox | n <- candidates ] -- 探索した条件の中から、打ち切られていないものを採用 
+ where
+  nextBox    = sp !! ((realIndex sb) + 1)
+  candidates = toList $ getCandidates sp sb
+  fillSp n = fillSudokuProblem (realIndex sb) sb { num = n } sp
 
 getCandidates :: SudokuProblem -> SudokuBox -> Candidates
 getCandidates sp sb
