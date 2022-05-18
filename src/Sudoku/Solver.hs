@@ -18,7 +18,9 @@ exhausiveSearch :: SudokuProblem -> [SudokuUnit]
 exhausiveSearch sp = convertToUnits sp blockIndex
 
 getCandidates :: SudokuProblem -> SudokuBox -> Candidates
-getCandidates sp sb = Set.difference (Set.fromList [0 .. 9]) allFilled
+getCandidates sp sb
+  | num sb /= 0 = Set.empty
+  | otherwise   = Set.difference (Set.fromList [0 .. 9]) allFilled
  where
   rowFilled = convertToUnits sp rowIndex !! (rowIndex sb)
   colFilled = convertToUnits sp columnIndex !! (columnIndex sb)
