@@ -16,11 +16,12 @@ type Candidates = Set.Set Int
 
 exhausiveSearch :: SudokuProblem -> SudokuBox -> SudokuProblem
 exhausiveSearch sp sb
-  | or [isAllFilled sp, realIndex sb == 80] = sp
+  | realIndex sb == 80 = fillSp
+  $ if candidates /= [] then head candidates else num sb
   | -- 探索完了条件
-    num sb /= 0                             = exhausiveSearch sp nextBox
+    num sb /= 0 = exhausiveSearch sp nextBox
   | -- 決定済みのマス目の場合、次のマスを探索
-    candidates == []                        = []
+    candidates == [] = []
   | -- 探索打ち切り条件
     otherwise = concat [ exhausiveSearch (fillSp n) nextBox | n <- candidates ] -- 探索した条件の中から、打ち切られていないものを採用 
  where
