@@ -1,9 +1,9 @@
 module Sudoku.Problem
   ( extractProblemsFromString
   , convertToUnits
+  , isAllFilled
   , SudokuBox(..)
   , SudokuProblem
-  , SudokuAnswer
   , SudokuUnit
   ) where
 
@@ -19,7 +19,6 @@ data SudokuBox = SudokuBox
   , blockIndex  :: Int
   }
 type SudokuProblem = [SudokuBox]
-type SudokuAnswer = [[Int]]
 type SudokuUnit = [Int]
 
 extractProblemsFromString :: [String] -> [SudokuProblem]
@@ -54,3 +53,6 @@ convertToUnits sp f = [ toUnit i | i <- [0 .. 8] ]
  where
   tuples = map (\x -> (f x, num x)) sp
   toUnit i = [ snd x | x <- tuples, fst x == i ]
+
+isAllFilled :: SudokuProblem -> Bool
+isAllFilled sp = and [ num x /= 0 | x <- sp ]
