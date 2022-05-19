@@ -48,3 +48,5 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - sudoku-solver
+    - hspec
+    - QuickCheck
