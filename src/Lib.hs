@@ -9,7 +9,7 @@ import           System.IO
 
 someFunc :: IO ()
 someFunc = do
-  handle <- openFile "resources/sudoku.txt" ReadMode
+  handle <- openFile "resources/problem/sudoku.txt" ReadMode
   text   <- hGetContents handle
   let problems = extractProblemsFromString $ lines text
 
