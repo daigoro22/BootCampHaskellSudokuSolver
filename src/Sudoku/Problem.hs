@@ -2,7 +2,7 @@ module Sudoku.Problem
   ( extractProblemsFromString
   , convertToUnits
   , isAllFilled
-  , fillSudokuProblem
+  , fillBox
   , SudokuBox(..)
   , SudokuProblem
   , SudokuUnit
@@ -60,6 +60,5 @@ convertToUnits sp f = [ toUnit i | i <- [0 .. 8] ]
 isAllFilled :: SudokuProblem -> Bool
 isAllFilled sp = all (\x -> num x /= 0) sp
 
-fillSudokuProblem :: Int -> SudokuBox -> SudokuProblem -> SudokuProblem
-fillSudokuProblem i sb sp =
-  toList $ Sequence.update i sb (Sequence.fromList sp)
+fillBox :: Int -> SudokuBox -> SudokuProblem -> SudokuProblem
+fillBox i sb sp = toList $ Sequence.update i sb (Sequence.fromList sp)

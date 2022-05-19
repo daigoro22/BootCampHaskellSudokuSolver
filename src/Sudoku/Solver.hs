@@ -27,7 +27,7 @@ exhausiveSearch sp sb
  where
   nextBox    = sp !! ((realIndex sb) + 1)
   candidates = toList $ getCandidates sp sb
-  fillSp n = fillSudokuProblem (realIndex sb) sb { num = n } sp
+  fillSp n = fillBox (realIndex sb) sb { num = n } sp
 
 getCandidates :: SudokuProblem -> SudokuBox -> Candidates
 getCandidates sp sb
