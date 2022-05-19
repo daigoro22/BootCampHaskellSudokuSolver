@@ -1,6 +1,5 @@
 module Sudoku.Solver
   ( exhausiveSearch
---  , getAllCandidates
   , getCandidates
   ) where
 
@@ -11,7 +10,6 @@ import qualified Data.Set                      as Set
 import           Sudoku.Problem
 import           System.IO
 
-data ValidationResult = Valid | InValid | NotFilled deriving (Eq, Show,Enum)
 type Candidates = Set.Set Int
 
 -- 数独問題を全探索する関数
